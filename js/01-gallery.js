@@ -34,10 +34,8 @@ import { galleryItems } from './gallery-items.js';
 // };
 
 
-const renderGallery = (galleryItems) =>
-    galleryItems
-        .map(({ preview, original,description }) =>
-        `<div class="gallery__item">
+const renderGallery = galleryItems.map(({ preview, original, description }) => {
+  return `<div class="gallery__item">
   <a class="gallery__link" href="${original}">
     <img
       class="gallery__image"
@@ -46,19 +44,14 @@ const renderGallery = (galleryItems) =>
       alt="${description}"
     />
   </a>
-</div>`)
+</div>`})
         .join("");
 
 
 const picture = document.querySelector(`.gallery`);
-const insertGalleryItems = (image) => {
-    picture.insertAdjacentHTML('beforeend', image);
-};
+picture.insertAdjacentHTML('beforeend', renderGallery);
  
-console.log(renderGallery(galleryItems));
-
-const result = renderGallery(galleryItems);
-insertGalleryItems(result);
+console.log(renderGallery);
 
 
 picture.addEventListener(`click`, showOriginalPicture);
@@ -70,7 +63,7 @@ function showOriginalPicture(event) {
   }
 
   const bigPicture = basicLightbox.create(`
-    <img src="${event.target.dataset.source} width="1400" height="900" ";
+    <img src="${event.target.dataset.source}">
 `, {
     onShow: (bigPicture) => document.addEventListener('keydown', modalClose),
     onClose: (bigPicture) => document.removeEventListener('keydown', modalClose)
